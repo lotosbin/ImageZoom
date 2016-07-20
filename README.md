@@ -9,7 +9,7 @@ use Gradle:
 
 ```
 dependencies {
-  compile 'liji.library.dev:imagezoom:1.0.0'
+  compile 'liji.library.dev:imagezoom:1.1.1'
 }
 ```
 
@@ -19,7 +19,7 @@ or Maven:
 <dependency>
   <groupId>liji.library.dev</groupId>
   <artifactId>imagezoom</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.1</version>
   <type>pom</type>
 </dependency>
 ```
@@ -67,7 +67,7 @@ ImageZoom.show(Context context, String url, List<String> list);
 
 
 ### 关于
-我的博客：[http://crazyandcoder.github.io/](http://crazyandcoder.github.io/)
-我的github: [https://github.com/crazyandcoder](https://github.com/crazyandcoder)
+1. 我的博客：[http://crazyandcoder.github.io/](http://crazyandcoder.github.io/)
+2. 我的github: [https://github.com/crazyandcoder](https://github.com/crazyandcoder)
 
 
