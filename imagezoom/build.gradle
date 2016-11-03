@@ -5,7 +5,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 //你的library版本号,+0.1为大改动，即添加新功能，+0.01的话就是小改动，修改每个utils中功能
-version = "1.0.0"
+version = "1.2.1"
 
 android {
     compileSdkVersion 23
@@ -106,7 +106,7 @@ bintray {
         //发布到Bintray的哪个仓库
         repo = "maven"
         //发布到Bintray上的名字
-        name = "ImageZoom"
+        name = "imagezoom"
         //项目描述
         desc = "image zoom"
         websiteUrl = siteUrl

@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.liji.imagezoom.R;
 import com.liji.imagezoom.widget.HackyViewPager;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +31,24 @@ public class ImagePagerActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.image_detail_pager);
+        setContentView(R.layout.pager_image_detail);
+
+        DisplayImageOptions defaultOptions = new DisplayImageOptions
+                .Builder()
+                .showImageForEmptyUri(R.drawable.empty_photo)
+                .showImageOnFail(R.drawable.empty_photo)
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration
+                .Builder(getApplicationContext())
+                .defaultDisplayImageOptions(defaultOptions)
+                .discCacheSize(50 * 1024 * 1024)//
+                .discCacheFileCount(100)//缓存一百张图片
+                .writeDebugLogs()
+                .build();
+        ImageLoader.getInstance().init(config);
+
 
         pagerPosition = getIntent().getIntExtra(EXTRA_IMAGE_INDEX, 0);
         urlists = this.getIntent().getStringArrayListExtra(EXTRA_IMAGE_URLS);
