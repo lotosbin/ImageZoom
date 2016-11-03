@@ -90,5 +90,7 @@ dependencies {
 **关于作者**
 
 我的博客：http://crazyandcoder.github.io/
+
 我的github: https://github.com/crazyandcoder
+
 简书号：http://www.jianshu.com/users/18281bdb07ce/latest_articles
