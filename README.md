@@ -15,7 +15,7 @@
 
 ```
 dependencies {
-  compile 'liji.library.dev:imagezoom:1.2.1'
+  compile 'liji.library.dev:imagezoom:1.2.2'
 }
 ```
 
@@ -86,6 +86,17 @@ dependencies {
      */
 ```
 
+
+> 3、public static void show(Context context, String url) 
+
+```
+	/**
+     * 跳转到图片预览页面
+     *
+     * @param context
+     * @param url    图片URL
+     */
+```
 
 **关于作者**
 
