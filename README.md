@@ -25,7 +25,7 @@ dependencies {
 <dependency>
   <groupId>liji.library.dev</groupId>
   <artifactId>imagezoom</artifactId>
-  <version>1.2.1</version>
+  <version>1.2.2</version>
   <type>pom</type>
 </dependency>
 ```
@@ -36,15 +36,15 @@ dependencies {
 
 ```
 		//数据源
-		final String[] urls = new String[] {
+	final String[] urls = new String[] {
                 "http://b.zol-img.com.cn/sjbizhi/images/2/320x510/1352891767829.jpg",
                 "http://image.tianjimedia.com/uploadImages/2012/289/71X94T2PF22Z.jpg", 
                 "http://b.zol-img.com.cn/sjbizhi/images/5/320x510/1372924333667.jpg",
                 "http://image.tianjimedia.com/uploadImages/2014/069/XXQR67MY1RAR.jpg", 
         };
 
-		//添加list数据	
-		final List<String> list = new ArrayList<>();
+	//添加list数据	
+	final List<String> list = new ArrayList<>();
         for (int i = 0; i < urls.length; i++) {
             list.add(urls[i]);
         }
