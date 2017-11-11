@@ -5,7 +5,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 //你的library版本号,+0.1为大改动，即添加新功能，+0.01的话就是小改动，修改每个utils中功能
-version = "1.2.1"
+version = "1.2.3"
 
 android {
     compileSdkVersion 23
@@ -82,18 +82,18 @@ task sourcesJar(type: Jar) {
 }
 
 
-task javadoc(type: Javadoc) {
-    //增加编码，这行很重要，如果是windows系统，同时如果在代码中有中文的话，不加这行，上传会报错
-    options.encoding = "utf-8"
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
+//task javadoc(type: Javadoc) {
+//    //增加编码，这行很重要，如果是windows系统，同时如果在代码中有中文的话，不加这行，上传会报错
+//    options.encoding = "utf-8"
+//    source = android.sourceSets.main.java.srcDirs
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//}
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
 artifacts {
-    archives javadocJar
+//    archives javadocJar
     archives sourcesJar
 }
 Properties properties = new Properties()

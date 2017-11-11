@@ -2,9 +2,11 @@ package com.liji.imagezoom.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.liji.imagezoom.activity.ImagePagerActivity;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,11 @@ import java.util.List;
  */
 public class ImageZoom {
 
+    /**
+     * 本地图片
+     */
+    public static final int LOCAL = 0;
+    
     /**
      * 跳转到图片预览页面
      *
@@ -29,7 +36,7 @@ public class ImageZoom {
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, positon);
         context.startActivity(intent);
     }
-
+    
     /**
      * 跳转到图片预览页面
      *
@@ -45,9 +52,63 @@ public class ImageZoom {
             intent.putStringArrayListExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, (ArrayList<String>) list);
             intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, positon);
             context.startActivity(intent);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Log.e("imagezoom", e.getMessage());
         }
     }
-
+    
+    /**
+     * 跳转到大图预览，只有一张图
+     * @param context
+     * @param url
+     */
+    public static void show(Context context, String url) {
+        try {
+            if (!TextUtils.isEmpty(url)) {
+                List<String> mImageUrls = new ArrayList<>();
+                mImageUrls.add(url);
+                Intent intent = new Intent(context, ImagePagerActivity.class);
+                intent.putStringArrayListExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, (ArrayList<String>) mImageUrls);
+                intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
+                context.startActivity(intent);
+            }
+            else {
+                Log.e("ImageZoom", "url is null");
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+    * 跳转到大图预览，只有一张图
+    * @param context
+    * @param url
+    */
+    public static void show(Context context, String url, int type) {
+        try {
+            if (!TextUtils.isEmpty(url) && type == LOCAL) {
+                List<String> mImageUrls = new ArrayList<>();
+                if (url.contains("storage")) {
+                    mImageUrls.add(ImageDownloader.Scheme.FILE.wrap(url));
+                }
+                else {
+                    mImageUrls.add(url);
+                }
+                Intent intent = new Intent(context, ImagePagerActivity.class);
+                intent.putStringArrayListExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, (ArrayList<String>) mImageUrls);
+                intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
+                context.startActivity(intent);
+            }
+            else {
+                Log.e("ImageZoom", "url is null");
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
 }

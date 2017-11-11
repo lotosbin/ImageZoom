@@ -1,12 +1,10 @@
 package com.liji.demo;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.liji.imagezoom.activity.ImagePagerActivity;
 import com.liji.imagezoom.util.ImageZoom;
 
 import java.util.ArrayList;
@@ -38,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageZoom.show(MainActivity.this, urls[1], list);
+                //                ImageZoom.show(MainActivity.this, urls[1], list);
+                ImageZoom.show(MainActivity.this,
+                        "/storage/emulated/0/Pictures/Screenshots/Screenshot_2017-11-09-20-50-53.png");
             }
         });
         
