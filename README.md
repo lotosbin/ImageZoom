@@ -1,21 +1,35 @@
-基本上，现在的每个APP都会涉及到图片的展示以及相关的操作，如放大、缩小，平移等操作，常规做法是找一些第三方的图片显示控件进行使用，自己再重复造轮子的话，代价成本太大，所以今天来对图片进行简单的封装，让其能够支持现在的项目需求。
+### **亮点**
+
+一行代码实现网络图片、本地图片的缩放显示，支持长按保存到本地相册操作，适配6.0权限。
 
 ### github项目地址地址
 [欢迎star、fork ,https://github.com/crazyandcoder/ImageZoom](https://github.com/crazyandcoder/ImageZoom)
 
-### 效果演示
+### **效果演示及apk下载地址**
 
-![扫描二维码下载APP演示.png](http://upload-images.jianshu.io/upload_images/676457-e2d3beec47193f5e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+#### **下载地址及二维码**
+[apk演示下载地址](https://fir.im/1ane?release_id=5a66ec6d959d6902df4a7925)
+
+![](http://img.blog.csdn.net/20180123160537226?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGlqaV94Yw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+#### **预览效果**
 
 
 ![图集功能封装.gif](http://upload-images.jianshu.io/upload_images/676457-4b5954510344f256.gif?imageMogr2/auto-orient/strip)
+
+
+**长按保存到本地相册，已经适配6.0权限**
+
+ ![](http://img.blog.csdn.net/20180123160913549?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGlqaV94Yw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+
 
 ### gradle 引用
 
 
 ```
 dependencies {
-  compile 'liji.library.dev:imagezoom:1.2.2'
+  compile 'liji.library.dev:imagezoom:1.3.0'
 }
 ```
 
@@ -25,12 +39,12 @@ dependencies {
 <dependency>
   <groupId>liji.library.dev</groupId>
   <artifactId>imagezoom</artifactId>
-  <version>1.2.2</version>
+  <version>1.3.0</version>
   <type>pom</type>
 </dependency>
 ```
 
-### 使用方法
+### **使用方法**
 
  
 
@@ -98,10 +112,42 @@ dependencies {
      */
 ```
 
-**关于作者**
+>  4、public static void show(Context context, String url, int type)
 
-我的博客：http://crazyandcoder.github.io/
+```
+	/**
+     * 跳转到大图预览，只有一张图
+     * @param context
+     * @param url
+     * @param type 包含加载本地图片的功能
+     */
 
-我的github: https://github.com/crazyandcoder
+//type取值：
+public class ImageUrlType {
+    /**
+     * 本地图片
+     */
+    public static final int LOCAL = 0;
 
-简书号：http://www.jianshu.com/users/18281bdb07ce/latest_articles
+    /**
+     * drawable下面的图片
+     */
+    public static final int DRAWABLE=1;
+
+
+}
+
+//使用demo如加载drawable目录下面的图
+ ImageZoom.show(this, "R.drawable.iclauncher", ImageUrlType.DRAWABLE);
+
+```
+
+### 更新说明
+
+#### **V1.3.0版本更新内容（2018.01.23）**
+ 1. 新增加载本地图片的功能
+ 2. 新增加载drawable目录下面的图片的功能
+ 3. 新增长按图片保存图片到本地相册的功能。
+ 4. 适配6.0权限
+
+
