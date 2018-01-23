@@ -76,12 +76,13 @@ public class ImageZoom {
             e.printStackTrace();
         }
     }
-    
+
     /**
-    * 跳转到大图预览，只有一张图
-    * @param context
-    * @param url
-    */
+     * 跳转到大图预览，只有一张图
+     * @param context
+     * @param url
+     * @param type
+     */
     public static void show(Context context, String url, int type) {
         try {
             if (!TextUtils.isEmpty(url)) {
@@ -110,9 +111,7 @@ public class ImageZoom {
                 intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
                 context.startActivity(intent);
             }
-            else {
-                Log.e("ImageZoom", "url is null");
-            }
+
         }
         catch (Exception e) {
             e.printStackTrace();
