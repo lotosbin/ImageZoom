@@ -16,11 +16,6 @@ import java.util.List;
  * 邮箱：lijiwork@sina.com
  */
 public class ImageZoom {
-
-    /**
-     * 本地图片
-     */
-    public static final int LOCAL = 0;
     
     /**
      * 跳转到图片预览页面
@@ -89,14 +84,27 @@ public class ImageZoom {
     */
     public static void show(Context context, String url, int type) {
         try {
-            if (!TextUtils.isEmpty(url) && type == LOCAL) {
+            if (!TextUtils.isEmpty(url)) {
                 List<String> mImageUrls = new ArrayList<>();
-                if (url.contains("storage")) {
-                    mImageUrls.add(ImageDownloader.Scheme.FILE.wrap(url));
+                
+                //本地相册图片
+                if (type == ImageUrlType.LOCAL) {
+                    if (url.contains("storage")) {
+                        mImageUrls.add(ImageDownloader.Scheme.FILE.wrap(url));
+                    }
+                    else {
+                        mImageUrls.add(url);
+                    }
+                }
+                //drawable目录下面的图
+                else if (type == ImageUrlType.DRAWABLE) {
+                    mImageUrls.add("drawable://" + url);
                 }
                 else {
+                    //网络图
                     mImageUrls.add(url);
                 }
+                
                 Intent intent = new Intent(context, ImagePagerActivity.class);
                 intent.putStringArrayListExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, (ArrayList<String>) mImageUrls);
                 intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
