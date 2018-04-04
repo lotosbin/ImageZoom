@@ -29,7 +29,7 @@
 
 ```
 dependencies {
-  compile 'liji.library.dev:imagezoom:1.3.0'
+  compile 'liji.library.dev:imagezoom:1.3.1'
 }
 ```
 
