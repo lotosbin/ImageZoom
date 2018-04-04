@@ -5,7 +5,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 //你的library版本号,+0.1为大改动，即添加新功能，+0.01的话就是小改动，修改每个utils中功能
-version = "1.3.0"
+version = "1.3.1"
 
 android {
     compileSdkVersion 23

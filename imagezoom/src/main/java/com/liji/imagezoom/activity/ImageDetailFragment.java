@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -169,11 +168,13 @@ public class ImageDetailFragment extends Fragment {
         final String SAVE_PIC_PATH = Environment.getExternalStorageState().equalsIgnoreCase(Environment.MEDIA_MOUNTED)
                 ? Environment.getExternalStorageDirectory().getAbsolutePath()
                 : "/mnt/sdcard";//保存到SD卡
+
         // 首先保存图片
         File appDir = new File(SAVE_PIC_PATH + "/ZoomImage/");
         if (!appDir.exists()) {
             appDir.mkdir();
         }
+
         long nowSystemTime = System.currentTimeMillis();
         String fileName = nowSystemTime + ".png";
         File file = new File(appDir, fileName);
@@ -192,17 +193,22 @@ public class ImageDetailFragment extends Fragment {
         catch (IOException e) {
             e.printStackTrace();
         }
-        
-        // 其次把文件插入到系统图库
-        try {
-            MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        // 最后通知图库更新
-        context.sendBroadcast(
-                new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file.getAbsolutePath())));
+
+        //保存图片后发送广播通知更新数据库
+        Uri uri = Uri.fromFile(file);
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+
+
+//        // 其次把文件插入到系统图库
+//        try {
+//            MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
+//        }
+//        catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        // 最后通知图库更新
+//        context.sendBroadcast(
+//                new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file.getAbsolutePath())));
         Toast.makeText(getContext(), "已保存到本地相册", Toast.LENGTH_LONG).show();
     }
     
