@@ -1,3 +1,6 @@
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191023090914820.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xqMTg4MjY2,size_16,color_FFFFFF,t_70)
+
 ### **亮点**
 
 一行代码实现网络图片、本地图片的缩放显示，支持长按保存到本地相册操作，适配6.0权限。
