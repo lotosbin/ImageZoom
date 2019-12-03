@@ -2,7 +2,6 @@ package com.liji.imagezoom.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -17,21 +16,21 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImagePagerActivity extends FragmentActivity {
-    private static final String STATE_POSITION = "STATE_POSITION";
+public class ImagePagerActivity extends ImagePagerActivity2 {
+    protected static final String STATE_POSITION = "STATE_POSITION";
     public static final String EXTRA_IMAGE_INDEX = "image_index";
     public static final String EXTRA_IMAGE_URLS = "image_urls";
+    public static final String EXTRA_IMAGE_TITLES = "image_titles";
 
-    private HackyViewPager mPager;
-    private int pagerPosition;
-    private TextView indicator;
+    protected HackyViewPager mPager;
+    protected int pagerPosition;
+    protected TextView indicator;
 
-    private List<String> urlists = new ArrayList<>();
+    protected List<String> urlists = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pager_image_detail);
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions
                 .Builder()
@@ -52,7 +51,10 @@ public class ImagePagerActivity extends FragmentActivity {
 
         pagerPosition = getIntent().getIntExtra(EXTRA_IMAGE_INDEX, 0);
         urlists = this.getIntent().getStringArrayListExtra(EXTRA_IMAGE_URLS);
-
+        List<String> list = this.getIntent().getStringArrayListExtra(EXTRA_IMAGE_TITLES);
+        if (list != null) {
+            this.titleList = list;
+        }
         mPager = (HackyViewPager) findViewById(R.id.pager);
         ImagePagerAdapter mAdapter = new ImagePagerAdapter(
                 getSupportFragmentManager(), urlists);
@@ -62,6 +64,7 @@ public class ImagePagerActivity extends FragmentActivity {
         CharSequence text = getString(R.string.viewpager_indicator, 1, mPager
                 .getAdapter().getCount());
         indicator.setText(text);
+
         // 更新下标
         mPager.setOnPageChangeListener(new OnPageChangeListener() {
 
@@ -74,10 +77,8 @@ public class ImagePagerActivity extends FragmentActivity {
             }
 
             @Override
-            public void onPageSelected(int arg0) {
-                CharSequence text = getString(R.string.viewpager_indicator,
-                        arg0 + 1, mPager.getAdapter().getCount());
-                indicator.setText(text);
+            public void onPageSelected(int position) {
+                ImagePagerActivity.this.onPageSelected(position);
             }
 
         });
@@ -89,8 +90,16 @@ public class ImagePagerActivity extends FragmentActivity {
     }
 
     @Override
+    protected void onPageSelected(int position) {
+        CharSequence text = getString(R.string.viewpager_indicator, position + 1, mPager.getAdapter().getCount());
+        indicator.setText(text);
+        super.onPageSelected(position);
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt(STATE_POSITION, mPager.getCurrentItem());
+        super.onSaveInstanceState(outState);
     }
 
     private class ImagePagerAdapter extends FragmentStatePagerAdapter {

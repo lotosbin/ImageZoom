@@ -52,6 +52,20 @@ public class ImageZoom {
             Log.e("imagezoom", e.getMessage());
         }
     }
+
+    public static void show(Context context, String url, List<String> list, List<String> titles) {
+        try {
+            int positon = list.indexOf(url);
+            Intent intent = new Intent(context, ImagePagerActivity.class);
+            // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+            intent.putStringArrayListExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, (ArrayList<String>) list);
+            intent.putStringArrayListExtra(ImagePagerActivity.EXTRA_IMAGE_TITLES, (ArrayList<String>) titles);
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, positon);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            Log.e("imagezoom", e.getMessage());
+        }
+    }
     
     /**
      * 跳转到大图预览，只有一张图
