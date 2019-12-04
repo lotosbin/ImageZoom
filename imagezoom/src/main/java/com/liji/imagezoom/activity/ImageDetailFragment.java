@@ -60,12 +60,13 @@ public class ImageDetailFragment extends Fragment {
     public void setDownloadImgBitmap(Bitmap downloadImgBitmap) {
         mDownloadImgBitmap = downloadImgBitmap;
     }
-    
-    public static ImageDetailFragment newInstance(String imageUrl) {
+
+    public static ImageDetailFragment newInstance(String imageUrl, Boolean enable_download) {
         final ImageDetailFragment f = new ImageDetailFragment();
         
         final Bundle args = new Bundle();
         args.putString("url", imageUrl);
+        args.putBoolean("enable_download", enable_download);
         f.setArguments(args);
         
         return f;
@@ -94,33 +95,36 @@ public class ImageDetailFragment extends Fragment {
         });
         
         //长按保存到本地相册
-        mAttacher.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                
-                final BottomMenuDialog dialog = new BottomMenuDialog.Builder()
-                        
-                        .addItem("保存到本地相册", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                checkPermission();
-                                
-                            }
-                        })
-                        .addItem("取消", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(getContext(), "取消", Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        
-                        .build();
-                dialog.show(getFragmentManager());
-                
-                return true;
-            }
-        });
-        
+        Bundle arguments = this.getArguments();
+        if (arguments.getBoolean("enable_download", true)) {
+            mAttacher.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    final BottomMenuDialog dialog = new BottomMenuDialog.Builder()
+
+                            .addItem("保存到本地相册", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    checkPermission();
+
+                                }
+                            })
+                            .addItem("取消", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Toast.makeText(getContext(), "取消", Toast.LENGTH_LONG).show();
+                                }
+                            })
+
+                            .build();
+                    dialog.show(getFragmentManager());
+
+                    return true;
+                }
+            });
+        }
+
         progressBar = (ProgressBar) v.findViewById(R.id.loading);
         return v;
     }

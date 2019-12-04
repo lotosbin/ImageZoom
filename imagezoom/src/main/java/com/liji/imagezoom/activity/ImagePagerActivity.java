@@ -27,11 +27,12 @@ public class ImagePagerActivity extends ImagePagerActivity2 {
     protected TextView indicator;
 
     protected List<String> urlists = new ArrayList<>();
+    protected boolean enable_download;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        enable_download = ImagePagerActivity.this.getIntent().getBooleanExtra("enable_download", true);
         DisplayImageOptions defaultOptions = new DisplayImageOptions
                 .Builder()
                 .showImageForEmptyUri(R.drawable.empty_photo)
@@ -119,7 +120,7 @@ public class ImagePagerActivity extends ImagePagerActivity2 {
         @Override
         public Fragment getItem(int position) {
             String url = fileList.get(position);
-            return ImageDetailFragment.newInstance(url);
+            return ImageDetailFragment.newInstance(url, enable_download);
         }
 
     }
