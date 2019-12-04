@@ -18,10 +18,11 @@ internal abstract class ImagePagerActivity2 : FragmentActivity() {
     }
 
     protected open fun onPageSelected(position: Int) {
-        try {
-            image_zoom_title?.text = titleList[position]
+        image_zoom_title?.text = try {
+            titleList[position]
         } catch (e: Exception) {
             Log.e("ImagePagerActivity", "onPageSelected:${e.message}", e)
+            ""
         }
     }
 }
