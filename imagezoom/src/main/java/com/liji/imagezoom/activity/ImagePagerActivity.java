@@ -57,17 +57,15 @@ public class ImagePagerActivity extends ImagePagerActivity2 {
             this.titleList = list;
         }
         mPager = (HackyViewPager) findViewById(R.id.pager);
-        ImagePagerAdapter mAdapter = new ImagePagerAdapter(
-                getSupportFragmentManager(), urlists);
+        ImagePagerAdapter mAdapter = new ImagePagerAdapter(getSupportFragmentManager(), urlists);
         mPager.setAdapter(mAdapter);
         indicator = (TextView) findViewById(R.id.indicator);
 
-        CharSequence text = getString(R.string.viewpager_indicator, 1, mPager
-                .getAdapter().getCount());
+        CharSequence text = getString(R.string.viewpager_indicator, 1, mPager.getAdapter().getCount());
         indicator.setText(text);
 
         // 更新下标
-        mPager.setOnPageChangeListener(new OnPageChangeListener() {
+        final OnPageChangeListener onPageChangeListener = new OnPageChangeListener() {
 
             @Override
             public void onPageScrollStateChanged(int arg0) {
@@ -82,12 +80,19 @@ public class ImagePagerActivity extends ImagePagerActivity2 {
                 ImagePagerActivity.this.onPageSelected(position);
             }
 
-        });
+        };
+        mPager.setOnPageChangeListener(onPageChangeListener);
         if (savedInstanceState != null) {
             pagerPosition = savedInstanceState.getInt(STATE_POSITION);
         }
 
         mPager.setCurrentItem(pagerPosition);
+        mPager.post(new Runnable() {
+            @Override
+            public void run() {
+                onPageChangeListener.onPageSelected(mPager.getCurrentItem());
+            }
+        });
     }
 
     @Override
