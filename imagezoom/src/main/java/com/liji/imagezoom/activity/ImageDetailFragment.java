@@ -13,7 +13,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -61,12 +63,14 @@ public class ImageDetailFragment extends Fragment {
         mDownloadImgBitmap = downloadImgBitmap;
     }
 
-    public static ImageDetailFragment newInstance(String imageUrl, Boolean enable_download) {
+    public static ImageDetailFragment newInstance(String imageUrl, Boolean enable_download, Boolean useDoubleTap, Boolean useSingleTopToExit) {
         final ImageDetailFragment f = new ImageDetailFragment();
         
         final Bundle args = new Bundle();
         args.putString("url", imageUrl);
         args.putBoolean("enable_download", enable_download);
+        args.putBoolean("useDoubleTap", useDoubleTap);
+        args.putBoolean("useSingleTopToExit", useSingleTopToExit);
         f.setArguments(args);
         
         return f;
@@ -84,18 +88,38 @@ public class ImageDetailFragment extends Fragment {
         final View v = inflater.inflate(R.layout.fragment_image_detail, container, false);
         mImageView = (ImageView) v.findViewById(R.id.image);
         mAttacher = new PhotoViewAttacher(mImageView);
-        
-        //单击退出页面
-        mAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
-            
-            @Override
-            public void onPhotoTap(View arg0, float arg1, float arg2) {
-                getActivity().finish();
-            }
-        });
-        
-        //长按保存到本地相册
         Bundle arguments = this.getArguments();
+        if (arguments.getBoolean("useSingleTopToExit", true)) {
+            //单击退出页面
+            mAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+
+                @Override
+                public void onPhotoTap(View arg0, float arg1, float arg2) {
+                    getActivity().finish();
+                }
+            });
+        }
+        if (arguments.getBoolean("useDoubleTap", true)) {
+            mAttacher.setOnDoubleTapListener(null);
+        } else {
+            mAttacher.setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
+                @Override
+                public boolean onSingleTapConfirmed(MotionEvent e) {
+                    return false;
+                }
+
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+                    return false;
+                }
+
+                @Override
+                public boolean onDoubleTapEvent(MotionEvent e) {
+                    return false;
+                }
+            });
+        }
+        //长按保存到本地相册
         if (arguments.getBoolean("enable_download", true)) {
             mAttacher.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

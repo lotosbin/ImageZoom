@@ -28,11 +28,14 @@ public class ImagePagerActivity extends ImagePagerActivity2 {
 
     protected List<String> urlists = new ArrayList<>();
     protected boolean enable_download;
-
+    protected boolean useDoubleTap;
+    protected boolean useSingleTopToExit;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         enable_download = ImagePagerActivity.this.getIntent().getBooleanExtra("enable_download", true);
+        useDoubleTap = ImagePagerActivity.this.getIntent().getBooleanExtra("useDoubleTap", true);
+        useDoubleTap = ImagePagerActivity.this.getIntent().getBooleanExtra("useSingleTopToExit", true);
         DisplayImageOptions defaultOptions = new DisplayImageOptions
                 .Builder()
                 .showImageForEmptyUri(R.drawable.empty_photo)
@@ -125,7 +128,7 @@ public class ImagePagerActivity extends ImagePagerActivity2 {
         @Override
         public Fragment getItem(int position) {
             String url = fileList.get(position);
-            return ImageDetailFragment.newInstance(url, enable_download);
+            return ImageDetailFragment.newInstance(url, enable_download, useDoubleTap, useSingleTopToExit);
         }
 
     }

@@ -8,6 +8,8 @@ class DemoImagePagerActivity : ImagePagerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enable_download = false
+        useDoubleTap = false
+        useSingleTopToExit = false
         dotsIndicator.setViewPager(mPager)
         mPager.adapter?.registerDataSetObserver(dotsIndicator.dataSetObserver)
     }
