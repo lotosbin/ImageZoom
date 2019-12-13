@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -137,7 +138,10 @@ public class ImageDetailFragment extends Fragment {
                             .addItem("取消", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Toast.makeText(getContext(), "取消", Toast.LENGTH_LONG).show();
+                                    Context context = getContext();
+                                    if (context != null) {
+                                        Toast.makeText(context, "取消", Toast.LENGTH_LONG).show();
+                                    }
                                 }
                             })
 
@@ -177,11 +181,13 @@ public class ImageDetailFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
             @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Context context = getContext();
         if (requestCode == REQUEST_WRITE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            saveImageToGallery(getContext(), getDownloadImgBitmap());
-        }
-        else {
-            Toast.makeText(getContext(), "已拒绝SD卡读写操作，无法保存照片到本地", Toast.LENGTH_LONG).show();
+            saveImageToGallery(context, getDownloadImgBitmap());
+        } else {
+            if (context != null) {
+                Toast.makeText(context, "已拒绝SD卡读写操作，无法保存照片到本地", Toast.LENGTH_LONG).show();
+            }
         }
         
     }
@@ -237,7 +243,10 @@ public class ImageDetailFragment extends Fragment {
 //        // 最后通知图库更新
 //        context.sendBroadcast(
 //                new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file.getAbsolutePath())));
-        Toast.makeText(getContext(), "已保存到本地相册", Toast.LENGTH_LONG).show();
+        Context context1 = getContext();
+        if (context1 != null) {
+            Toast.makeText(context1, "已保存到本地相册", Toast.LENGTH_LONG).show();
+        }
     }
     
     @Override
@@ -252,7 +261,7 @@ public class ImageDetailFragment extends Fragment {
             
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                String message = null;
+                String message;
                 switch (failReason.getType()) {
                     case IO_ERROR:
                         message = "下载错误";
@@ -266,11 +275,14 @@ public class ImageDetailFragment extends Fragment {
                     case OUT_OF_MEMORY:
                         message = "图片太大无法显示";
                         break;
-                    case UNKNOWN:
+                    default:
                         message = "未知的错误";
                         break;
                 }
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                FragmentActivity activity = getActivity();
+                if (activity != null) {
+                    Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                }
                 progressBar.setVisibility(View.GONE);
             }
             
